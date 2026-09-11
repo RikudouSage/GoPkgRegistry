@@ -1,0 +1,57 @@
+name: Build app
+
+on:
+  push:
+    branches:
+      - "**"
+    tags:
+      - "**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+
+      - name: Install Nix
+        uses: cachix/install-nix-action@v31
+
+      - name: Build app
+        env:
+          PACKAGE_VERSION: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || '' }}
+        run: |
+          if [[ -n "$PACKAGE_VERSION" ]]; then
+            nix build --impure .#app
+          else
+            nix build .#app
+          fi
+
+          mkdir -p dist
+          cp --dereference result/bin/go-pkg-repository dist/go-pkg-repository-linux-amd64
+          chmod 0755 dist/go-pkg-repository-linux-amd64
+
+      - name: Upload workflow artifact
+        uses: actions/upload-artifact@v7
+        with:
+          path: dist/go-pkg-repository-linux-amd64
+          archive: false
+
+      - name: Create a Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          name: ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: dist/go-pkg-repository-linux-amd64
