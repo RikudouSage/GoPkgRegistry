@@ -1,13 +1,14 @@
 package handlers
 
 import (
-	"GoPkgRepository/cfg"
-	"GoPkgRepository/db"
-	"GoPkgRepository/helper"
-	"GoPkgRepository/tpl"
 	"html/template"
 	"log"
 	"net/http"
+
+	"go.chrastecky.dev/go-pkg-repository/cfg"
+	"go.chrastecky.dev/go-pkg-repository/db"
+	"go.chrastecky.dev/go-pkg-repository/helper"
+	"go.chrastecky.dev/go-pkg-repository/tpl"
 
 	clone "github.com/huandu/go-clone/generic"
 )

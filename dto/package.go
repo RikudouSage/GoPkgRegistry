@@ -1,7 +1,7 @@
 package dto
 
 import (
-	"GoPkgRepository/types"
+	"go.chrastecky.dev/go-pkg-repository/types"
 )
 
 type RepositoryType string

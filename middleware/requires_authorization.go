@@ -1,9 +1,10 @@
 package middleware
 
 import (
-	"GoPkgRepository/helper"
 	"net/http"
 	"strings"
+
+	"go.chrastecky.dev/go-pkg-repository/helper"
 )
 
 func RequiresAuthorizationMiddleware(apiKey string) func(http.Handler) http.Handler {

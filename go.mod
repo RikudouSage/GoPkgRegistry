@@ -1,4 +1,4 @@
-module GoPkgRepository
+module go.chrastecky.dev/go-pkg-repository
 
 go 1.27
 

@@ -1,11 +1,12 @@
 package db
 
 import (
-	"GoPkgRepository/cfg"
-	"GoPkgRepository/dto"
-	"GoPkgRepository/migrations"
 	"database/sql"
 	"fmt"
+
+	"go.chrastecky.dev/go-pkg-repository/cfg"
+	"go.chrastecky.dev/go-pkg-repository/dto"
+	"go.chrastecky.dev/go-pkg-repository/migrations"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/pressly/goose/v3"

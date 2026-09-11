@@ -1,10 +1,6 @@
 package main
 
 import (
-	"GoPkgRepository/cfg"
-	"GoPkgRepository/db"
-	"GoPkgRepository/handlers"
-	appMiddleware "GoPkgRepository/middleware"
 	"context"
 	"errors"
 	"fmt"
@@ -14,6 +10,11 @@ import (
 	"os/signal"
 	"syscall"
 	"time"
+
+	"go.chrastecky.dev/go-pkg-repository/cfg"
+	"go.chrastecky.dev/go-pkg-repository/db"
+	"go.chrastecky.dev/go-pkg-repository/handlers"
+	appMiddleware "go.chrastecky.dev/go-pkg-repository/middleware"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"

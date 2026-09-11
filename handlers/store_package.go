@@ -1,12 +1,13 @@
 package handlers
 
 import (
-	"GoPkgRepository/db"
-	"GoPkgRepository/dto"
-	"GoPkgRepository/helper"
 	"encoding/json"
 	"log"
 	"net/http"
+
+	"go.chrastecky.dev/go-pkg-repository/db"
+	"go.chrastecky.dev/go-pkg-repository/dto"
+	"go.chrastecky.dev/go-pkg-repository/helper"
 )
 
 func StorePackageHandler(writer http.ResponseWriter, req *http.Request, database *db.Client) {

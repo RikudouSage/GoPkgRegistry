@@ -1,10 +1,11 @@
 package handlers
 
 import (
-	"GoPkgRepository/db"
-	"GoPkgRepository/helper"
 	"log"
 	"net/http"
+
+	"go.chrastecky.dev/go-pkg-repository/db"
+	"go.chrastecky.dev/go-pkg-repository/helper"
 
 	"github.com/go-chi/chi/v5"
 )
