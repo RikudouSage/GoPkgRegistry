@@ -6,6 +6,8 @@ import (
 	"net/http"
 )
 
+// WriteJSON marshals data as JSON and writes it to writer with an
+// application/json content type.
 func WriteJSON(writer http.ResponseWriter, data any) error {
 	bytes, err := json.Marshal(data)
 	if err != nil {

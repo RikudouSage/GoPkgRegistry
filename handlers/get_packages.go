@@ -8,6 +8,7 @@ import (
 	"go.chrastecky.dev/go-pkg-repository/helper"
 )
 
+// GetPackagesHandler writes all stored packages as JSON.
 func GetPackagesHandler(writer http.ResponseWriter, _ *http.Request, database *db.Client) {
 	pkgs, err := database.GetPackages()
 	if err != nil {

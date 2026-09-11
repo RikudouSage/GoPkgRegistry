@@ -12,10 +12,12 @@ import (
 	"github.com/pressly/goose/v3"
 )
 
+// Client stores and retrieves package metadata in SQLite.
 type Client struct {
 	db *sql.DB
 }
 
+// NewClient opens the configured SQLite database and applies pending migrations.
 func NewClient(config *cfg.GlobalConfig) (*Client, error) {
 	db, err := sql.Open("sqlite3", fmt.Sprintf("file:%s?_foreign_keys=on", config.DatabasePath))
 	if err != nil {
@@ -46,6 +48,8 @@ func (receiver *Client) migrate() error {
 	return nil
 }
 
+// FindPackageByImportPath returns the package with the given import path.
+// It returns (nil, nil) when no package matches.
 func (receiver *Client) FindPackageByImportPath(path string) (*dto.Package, error) {
 	rows, err := receiver.db.Query("SELECT id, import_path, vcs, repository_url, source_url, source_dir_url, source_file_url from packages where import_path=? limit 1", path)
 	if err != nil {
@@ -64,6 +68,7 @@ func (receiver *Client) FindPackageByImportPath(path string) (*dto.Package, erro
 	}
 }
 
+// GetPackages returns all stored packages.
 func (receiver *Client) GetPackages() ([]*dto.Package, error) {
 	rows, err := receiver.db.Query("SELECT id, import_path, vcs, repository_url, source_url, source_dir_url, source_file_url from packages")
 	if err != nil {
@@ -83,6 +88,8 @@ func (receiver *Client) GetPackages() ([]*dto.Package, error) {
 	return packages, nil
 }
 
+// StorePackage inserts pkg or updates the existing package with the same import
+// path. On success, it sets pkg.ID to the stored database identifier.
 func (receiver *Client) StorePackage(pkg *dto.Package) error {
 	query := `insert into packages (import_path, vcs, repository_url, source_url, source_dir_url, source_file_url)
 				values (?, ?, ?, ?, ?, ?)

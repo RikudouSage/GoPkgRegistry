@@ -13,6 +13,8 @@ import (
 	clone "github.com/huandu/go-clone/generic"
 )
 
+// PackageHandler serves go-import metadata for the package named by the
+// request URL. If configured, HostOverride is used to derive the import path.
 func PackageHandler(
 	writer http.ResponseWriter,
 	req *http.Request,

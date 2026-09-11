@@ -10,6 +10,8 @@ import (
 	"go.chrastecky.dev/go-pkg-repository/helper"
 )
 
+// StorePackageHandler validates and stores package metadata from a JSON request
+// body, then writes the stored package as JSON.
 func StorePackageHandler(writer http.ResponseWriter, req *http.Request, database *db.Client) {
 	pkg := &dto.Package{}
 	if err := json.NewDecoder(req.Body).Decode(&pkg); err != nil {

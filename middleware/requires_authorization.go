@@ -7,6 +7,8 @@ import (
 	"go.chrastecky.dev/go-pkg-repository/helper"
 )
 
+// RequiresAuthorizationMiddleware returns middleware that requires apiKey in
+// the Authorization header, optionally prefixed by "Bearer ".
 func RequiresAuthorizationMiddleware(apiKey string) func(http.Handler) http.Handler {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(writer http.ResponseWriter, req *http.Request) {

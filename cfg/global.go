@@ -3,12 +3,18 @@ package cfg
 import "github.com/kelseyhightower/envconfig"
 
 type GlobalConfig struct {
-	AdminAPIKey  string `required:"true" split_words:"true"`
-	Port         uint16 `default:"8080" split_words:"true"`
+	// AdminAPIKey is the secret required to access administrative endpoints.
+	AdminAPIKey string `required:"true" split_words:"true"`
+	// Port is the TCP port on which the HTTP server listens.
+	Port uint16 `default:"8080" split_words:"true"`
+	// HostOverride replaces the request host when constructing package metadata.
 	HostOverride string `split_words:"true"`
+	// DatabasePath is the path to the SQLite database file.
 	DatabasePath string `default:"./data.sqlite3" split_words:"true"`
 }
 
+// GetGlobalConfig loads GlobalConfig from APP_-prefixed environment variables.
+// Default values are applied to unset optional fields.
 func GetGlobalConfig() (*GlobalConfig, error) {
 	cfg := GlobalConfig{}
 	err := envconfig.Process("app", &cfg)

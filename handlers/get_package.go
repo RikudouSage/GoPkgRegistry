@@ -10,6 +10,8 @@ import (
 	"github.com/go-chi/chi/v5"
 )
 
+// GetPackageHandler writes the package identified by chi's wildcard URL
+// parameter as JSON.
 func GetPackageHandler(writer http.ResponseWriter, req *http.Request, database *db.Client) {
 	pkg, err := database.FindPackageByImportPath(chi.URLParam(req, "*"))
 	if err != nil {
