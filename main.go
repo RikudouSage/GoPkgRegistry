@@ -63,6 +63,11 @@ func getRouter() chi.Router {
 }
 
 func main() {
+	if !globalConfig.RedirectTo.IsValid() {
+		fmt.Fprintf(os.Stderr, "The '%s' value is not a valid redirect target, defaulting to %s", globalConfig.RedirectTo, globalConfig.RedirectTo.GetDefault())
+		globalConfig.RedirectTo = globalConfig.RedirectTo.GetDefault()
+	}
+
 	gracefulShutdown := make(chan os.Signal, 1)
 	signal.Notify(gracefulShutdown, syscall.SIGTERM, syscall.SIGINT, syscall.SIGQUIT)
 

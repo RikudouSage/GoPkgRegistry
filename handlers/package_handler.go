@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"fmt"
 	"html/template"
 	"log"
 	"net/http"
 
 	"go.chrastecky.dev/go-pkg-repository/cfg"
 	"go.chrastecky.dev/go-pkg-repository/db"
+	"go.chrastecky.dev/go-pkg-repository/dto"
 	"go.chrastecky.dev/go-pkg-repository/helper"
 	"go.chrastecky.dev/go-pkg-repository/tpl"
 
@@ -55,8 +57,21 @@ func PackageHandler(
 	writer.Header().Add("Content-Type", "text/html")
 	writer.Header().Add("Cache-Control", "no-cache, no-store, must-revalidate")
 
+	type pkgConfig struct {
+		*dto.Package
+
+		RedirectTo string
+		GoPkgURL   string
+	}
+
+	pkgCfg := pkgConfig{
+		Package:    pkg,
+		RedirectTo: string(cfg.RedirectTo),
+		GoPkgURL:   fmt.Sprintf("https://pkg.go.dev/%s", packageName),
+	}
+
 	tmpl := template.Must(template.ParseFS(tpl.Templates, "package.html.tpl"))
-	if err := tmpl.Execute(writer, pkg); err != nil {
+	if err := tmpl.Execute(writer, pkgCfg); err != nil {
 		log.Println(err)
 		helper.WriteJSON(writer, map[string]string{"error": "internal error"})
 	}

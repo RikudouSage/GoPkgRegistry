@@ -23,6 +23,7 @@ Configuration is read from environment variables. `APP_ADMIN_API_KEY` is the onl
 | `APP_HOST_OVERRIDE` | No       | Request host     | Public host used when resolving an import path, such as `go.example.com`. This is useful behind a reverse proxy if it does not preserve the original `Host` header. |
 | `APP_DATABASE_PATH` | No       | `./data.sqlite3` | Path to the SQLite database. The database and schema are created automatically.                                                                                     |
 | `APP_FRONTEND_URL`  | No       | —                | Allowed UI origin for CORS, for example `https://ui.example.com`. Set this when the UI and API use different origins.                                               |
+| `APP_REDIRECT_TO`   | No       | `source`         | Browser redirect target for a package page: `source` redirects to its repository; `go` redirects to its page on `pkg.go.dev`.                                       |
 
 ## Run with Docker
 
@@ -45,6 +46,7 @@ docker run --name go-pkg-repository \
   --env APP_ADMIN_API_KEY='replace-with-a-long-random-secret' \
   --env APP_HOST_OVERRIDE='go.example.com' \
   --env APP_DATABASE_PATH='/data/data.sqlite3' \
+  --env APP_REDIRECT_TO='source' \
   --mount type=bind,source="$(pwd)/data",target=/data \
   ghcr.io/rikudousage/go-pkg-repository:dev
 ```

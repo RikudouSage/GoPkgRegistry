@@ -1,6 +1,29 @@
 package cfg
 
-import "github.com/kelseyhightower/envconfig"
+import (
+	"slices"
+
+	"github.com/kelseyhightower/envconfig"
+)
+
+type RedirectTo string
+
+const (
+	RedirectToSource RedirectTo = "source"
+	RedirectToGo     RedirectTo = "go"
+)
+
+func (receiver RedirectTo) GetValidValues() []RedirectTo {
+	return []RedirectTo{RedirectToSource, RedirectToGo}
+}
+
+func (receiver RedirectTo) IsValid() bool {
+	return slices.Contains(receiver.GetValidValues(), receiver)
+}
+
+func (receiver RedirectTo) GetDefault() RedirectTo {
+	return RedirectToSource
+}
 
 type GlobalConfig struct {
 	// AdminAPIKey is the secret required to access administrative endpoints.
@@ -11,7 +34,10 @@ type GlobalConfig struct {
 	HostOverride string `split_words:"true"`
 	// DatabasePath is the path to the SQLite database file.
 	DatabasePath string `default:"./data.sqlite3" split_words:"true"`
-	FrontendURL  string `split_words:"true"`
+	// FrontendURL configures which origin can access this backend using CORS
+	FrontendURL string `split_words:"true"`
+	// RedirectTo chooses where does the pkg url redirect to, either "source" (to the source repo) or "go" (to pkg.go.dev)
+	RedirectTo RedirectTo `split_words:"true" default:"source"`
 }
 
 // GetGlobalConfig loads GlobalConfig from APP_-prefixed environment variables.

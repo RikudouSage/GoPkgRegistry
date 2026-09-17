@@ -7,9 +7,17 @@
     {{if .SourceURL}}
         <meta name="go-source" content="{{.ImportPath}} {{.SourceURL}} {{.SourceDirURL}} {{.SourceFileURL}}">
     {{end}}
-    <meta http-equiv="refresh" content="4; url={{.RepositoryURL}}" />
+    {{if eq .RedirectTo "source"}}
+        <meta http-equiv="refresh" content="4; url={{.RepositoryURL}}" />
+    {{else}}
+        <meta http-equiv="refresh" content="4; url={{.GoPkgURL}}" />
+    {{end}}
 </head>
 <body>
-   Redirecting to <a href="{{.RepositoryURL}}">Source</a> in 3 seconds...
+   {{if eq .RedirectTo "source"}}
+       Redirecting to <a href="{{.RepositoryURL}}">source</a> in 3 seconds...
+   {{else}}
+       Redirecting to <a href="{{.GoPkgURL}}">pkg.go.dev</a> in 3 seconds...
+   {{end}}
 </body>
 </html>
