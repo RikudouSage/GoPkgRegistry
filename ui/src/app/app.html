@@ -1,13 +1,13 @@
 <div class="app-shell">
   <header class="topbar">
-    <a class="brand" routerLink="/" aria-label="Go package repository home">
+    <a class="brand" routerLink="/" [attr.aria-label]="'app.brand.aria_label' | transloco">
       <span class="brand-mark">go</span>
-      <span>Package Registry</span>
+      <span>{{ 'app.brand.name' | transloco }}</span>
     </a>
 
-    <button class="theme-toggle" type="button" (click)="toggleTheme()" [attr.aria-label]="theme() === 'dark' ? 'Use light theme' : 'Use dark theme'">
+    <button class="theme-toggle" type="button" (click)="toggleTheme()" [attr.aria-label]="(theme() === 'dark' ? 'app.theme.switch_to_light' : 'app.theme.switch_to_dark') | transloco">
       <span aria-hidden="true">{{ theme() === 'dark' ? '☀' : '☾' }}</span>
-      <span class="theme-label">{{ theme() === 'dark' ? 'Light' : 'Dark' }}</span>
+      <span class="theme-label">{{ (theme() === 'dark' ? 'app.theme.light' : 'app.theme.dark') | transloco }}</span>
     </button>
   </header>
 

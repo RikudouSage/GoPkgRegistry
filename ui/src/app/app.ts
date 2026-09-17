@@ -1,9 +1,10 @@
 import {Component, DOCUMENT, effect, Inject, PLATFORM_ID, signal} from '@angular/core';
 import {RouterLink, RouterOutlet} from '@angular/router';
 import {isPlatformBrowser} from '@angular/common';
+import {TranslocoPipe} from '@jsverse/transloco';
 
 @Component({
-  imports: [RouterLink, RouterOutlet],
+  imports: [RouterLink, RouterOutlet, TranslocoPipe],
   selector: 'app-root',
   styleUrl: './app.scss',
   templateUrl: './app.html',

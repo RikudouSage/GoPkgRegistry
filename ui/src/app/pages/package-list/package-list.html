@@ -1,9 +1,9 @@
 <section class="packages-page">
   <header class="page-heading">
     <div>
-      <p class="eyebrow">Registry</p>
+      <p class="eyebrow">{{ 'packages.eyebrow' | transloco }}</p>
       <h1>{{'packages.title' | transloco}}</h1>
-      <p>Browse and maintain the package sources available to your team.</p>
+      <p>{{ 'packages.description' | transloco }}</p>
     </div>
     <a class="create-button" routerLink="/package/create"><span aria-hidden="true">+</span>{{'packages.create_link' | transloco}}</a>
   </header>
@@ -13,7 +13,7 @@
   } @else if (packages()!.length === 0) {
     <div class="state-card empty-state">
       <span class="empty-icon" aria-hidden="true">⌘</span>
-      <h2>Your registry is empty</h2>
+      <h2>{{ 'packages.empty_title' | transloco }}</h2>
       <p>{{'packages.empty_list' | transloco}}</p>
     </div>
   } @else {

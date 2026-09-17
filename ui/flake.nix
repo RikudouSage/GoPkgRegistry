@@ -53,7 +53,7 @@
                 fs.writeFileSync(file, html.replace(/<base href="[^"]*">/, baseTag));
               }
 
-              for (const name of ["API_URL", "SAME_ORIGIN", "SSR_API_URL"]) {
+              for (const name of ["API_URL", "SAME_ORIGIN", "SSR_API_URL", "BASE_HREF"]) {
                 if (Object.hasOwn(process.env, name)) {
                   fs.appendFileSync(runtimeVariablesFile, `\ndefine(''${JSON.stringify(name)}, ''${JSON.stringify(process.env[name])});\n`);
                 }

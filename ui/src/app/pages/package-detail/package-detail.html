@@ -3,40 +3,40 @@
 } @else {
   <section class="editor-page">
     <header class="editor-heading">
-      <p class="eyebrow">{{ isNew() ? 'New entry' : 'Package settings' }}</p>
-      <h1>{{ isNew() ? 'Add a package' : formData().import_path }}</h1>
-      <p>{{ isNew() ? 'Register a repository and the URLs used to serve it.' : 'Keep this package’s source information accurate and discoverable.' }}</p>
+      <p class="eyebrow">{{ (isNew() ? 'package.editor.new_entry' : 'package.editor.settings') | transloco }}</p>
+      <h1>{{ isNew() ? ('package.editor.create_heading' | transloco) : formData().import_path }}</h1>
+      <p>{{ (isNew() ? 'package.editor.create_description' : 'package.editor.edit_description') | transloco }}</p>
     </header>
 
     <form class="package-form" (ngSubmit)="onSubmit()">
       <fieldset>
-        <legend>Repository</legend>
-        <p class="section-help">The information developers need to fetch this package.</p>
+        <legend>{{ 'package.editor.repository' | transloco }}</legend>
+        <p class="section-help">{{ 'package.editor.repository_help' | transloco }}</p>
         <div class="form-grid">
           <div class="field field-wide">
-            <label for="import-path">{{ 'package.name' | transloco }} <span>Required</span></label>
-            <input id="import-path" type="text" autocomplete="off" placeholder="example.com/team/package" [formField]="form.import_path"/>
+            <label for="import-path">{{ 'package.name' | transloco }} <span>{{ 'common.required' | transloco }}</span></label>
+            <input id="import-path" type="text" autocomplete="off" [placeholder]="'package.placeholder.import_path' | transloco" [formField]="form.import_path"/>
           </div>
           <div class="field">
-            <label for="vcs">{{ 'package.vcs' | transloco }} <span>Required</span></label>
+            <label for="vcs">{{ 'package.vcs' | transloco }} <span>{{ 'common.required' | transloco }}</span></label>
             <select id="vcs" [formField]="form.vcs">
-              <option [value]="Vcs.Git">Git</option><option [value]="Vcs.Mercurial">Mercurial</option><option [value]="Vcs.Subversion">Subversion</option><option [value]="Vcs.Fossil">Fossil</option>
+              <option [value]="Vcs.Git">{{ 'package.vcs.git' | transloco }}</option><option [value]="Vcs.Mercurial">{{ 'package.vcs.mercurial' | transloco }}</option><option [value]="Vcs.Subversion">{{ 'package.vcs.subversion' | transloco }}</option><option [value]="Vcs.Fossil">{{ 'package.vcs.fossil' | transloco }}</option>
             </select>
           </div>
           <div class="field">
-            <label for="repository-url">{{ 'package.repository_url' | transloco }} <span>Required</span></label>
-            <input id="repository-url" type="url" placeholder="https://github.com/org/repository" [formField]="form.repository_url"/>
+            <label for="repository-url">{{ 'package.repository_url' | transloco }} <span>{{ 'common.required' | transloco }}</span></label>
+            <input id="repository-url" type="url" [placeholder]="'package.placeholder.repository_url' | transloco" [formField]="form.repository_url"/>
           </div>
         </div>
       </fieldset>
 
       <fieldset>
-        <legend>Source links <small>Optional</small></legend>
-        <p class="section-help">Add direct links when the repository structure needs extra guidance.</p>
+        <legend>{{ 'package.editor.source_links' | transloco }} <small>{{ 'common.optional' | transloco }}</small></legend>
+        <p class="section-help">{{ 'package.editor.source_links_help' | transloco }}</p>
         <div class="form-grid">
-          <div class="field"><label for="source-url">{{ 'package.source_url' | transloco }}</label><input id="source-url" type="url" placeholder="https://…" [formField]="form.source_url"/></div>
-          <div class="field"><label for="source-dir-url">{{ 'package.source_dir_url' | transloco }}</label><input id="source-dir-url" type="url" placeholder="https://…" [formField]="form.source_dir_url"/></div>
-          <div class="field field-wide"><label for="source-file-url">{{ 'package.source_file_url' | transloco }}</label><input id="source-file-url" type="url" placeholder="https://…" [formField]="form.source_file_url"/></div>
+          <div class="field"><label for="source-url">{{ 'package.source_url' | transloco }}</label><input id="source-url" type="url" [placeholder]="'package.placeholder.source_url' | transloco" [formField]="form.source_url"/></div>
+          <div class="field"><label for="source-dir-url">{{ 'package.source_dir_url' | transloco }}</label><input id="source-dir-url" type="url" [placeholder]="'package.placeholder.source_url' | transloco" [formField]="form.source_dir_url"/></div>
+          <div class="field field-wide"><label for="source-file-url">{{ 'package.source_file_url' | transloco }}</label><input id="source-file-url" type="url" [placeholder]="'package.placeholder.source_url' | transloco" [formField]="form.source_file_url"/></div>
         </div>
       </fieldset>
       <div class="form-actions"><button type="submit" [disabled]="!form().valid()">@if (isNew()) { {{'package.submit.create' | transloco}} } @else { {{'package.submit.update' | transloco}} }</button></div>
