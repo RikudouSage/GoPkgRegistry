@@ -3,6 +3,7 @@ import {HttpBackend, HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {catchError, firstValueFrom, map, of} from 'rxjs';
 import {isPlatformBrowser} from '@angular/common';
+import {apiUrl} from '../http/api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +26,7 @@ export class Auth {
   }
 
   public async login(apiKey: string): Promise<boolean> {
-    const success = await firstValueFrom(this.httpClient.get(`${environment.apiUrl}/admin/packages`, {
+    const success = await firstValueFrom(this.httpClient.get(apiUrl('/admin/packages'), {
       headers: {
         Authorization: `Bearer ${apiKey}`,
       },

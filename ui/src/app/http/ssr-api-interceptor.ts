@@ -5,8 +5,10 @@ import { environment } from '../../environments/environment';
 
 export const SsrApiInterceptor: HttpInterceptorFn = (req, next) => {
   const platformId = inject(PLATFORM_ID);
-  const apiUrl = environment.apiUrl.replace(/\/$/, '');
-  const isApiRequest = req.url === apiUrl || req.url.startsWith(`${apiUrl}/`);
+  const apiBaseUrl = environment.apiUrl.replace(/\/+$/, '');
+  const isApiRequest = apiBaseUrl === ''
+    ? req.url === '/admin' || req.url.startsWith('/admin/')
+    : req.url === apiBaseUrl || req.url.startsWith(`${apiBaseUrl}/`);
 
   if (environment.ssrApiUrl && isPlatformServer(platformId) && isApiRequest) {
     const ssrUrl = new URL(environment.ssrApiUrl);

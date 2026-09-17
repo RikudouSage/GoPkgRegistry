@@ -2,7 +2,7 @@ import {Injectable, Service} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {Package} from '../dto/package';
-import {environment} from '../../environments/environment';
+import {apiUrl} from '../http/api-url';
 
 @Injectable({
   providedIn: 'root',
@@ -14,14 +14,14 @@ export class Api {
   }
 
   public getAll(): Observable<Package[]> {
-    return this.httpClient.get<Package[]>(`${environment.apiUrl}/admin/packages`);
+    return this.httpClient.get<Package[]>(apiUrl('/admin/packages'));
   }
 
   public findById(id: number): Observable<Package> {
-    return this.httpClient.get<Package>(`${environment.apiUrl}/admin/packages/by-id/${id}`);
+    return this.httpClient.get<Package>(apiUrl(`/admin/packages/by-id/${id}`));
   }
 
   public createOrUpdate(pkg: Package): Observable<Package> {
-    return this.httpClient.post<Package>(`${environment.apiUrl}/admin/packages`, pkg);
+    return this.httpClient.post<Package>(apiUrl('/admin/packages'), pkg);
   }
 }
