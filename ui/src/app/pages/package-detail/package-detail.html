@@ -1,39 +1,45 @@
-<form (ngSubmit)="onSubmit()">
-  <div>
-    <label>{{ 'package.name' | transloco }}</label>
-    <input type="text" [formField]="form.import_path"/>
-  </div>
-  <div>
-    <label>{{ 'package.vcs' | transloco }}</label>
-    <select [formField]="form.vcs">
-      <option [value]="Vcs.Git">Git</option>
-      <option [value]="Vcs.Mercurial">Mercurial</option>
-      <option [value]="Vcs.Subversion">Subversion</option>
-      <option [value]="Vcs.Fossil">Fossil</option>
-    </select>
-  </div>
-  <div>
-    <label>{{ 'package.repository_url' | transloco }}</label>
-    <input type="url" [formField]="form.repository_url"/>
-  </div>
-  <div>
-    <label>{{ 'package.source_url' | transloco }}</label>
-    <input type="url" [formField]="form.source_url"/>
-  </div>
-  <div>
-    <label>{{ 'package.source_dir_url' | transloco }}</label>
-    <input type="url" [formField]="form.source_dir_url"/>
-  </div>
-  <div>
-    <label>{{ 'package.source_file_url' | transloco }}</label>
-    <input type="url" [formField]="form.source_file_url"/>
-  </div>
+@if (loading()) {
+  <div class="loading-state"><span></span>{{'common.loading' | transloco}}</div>
+} @else {
+  <section class="editor-page">
+    <header class="editor-heading">
+      <p class="eyebrow">{{ isNew() ? 'New entry' : 'Package settings' }}</p>
+      <h1>{{ isNew() ? 'Add a package' : formData().import_path }}</h1>
+      <p>{{ isNew() ? 'Register a repository and the URLs used to serve it.' : 'Keep this package’s source information accurate and discoverable.' }}</p>
+    </header>
 
-  <button type="submit" [disabled]="!form().valid()">
-    @if (isNew()) {
-      {{'package.submit.create' | transloco}}
-    } @else {
-      {{'package.submit.update' | transloco}}
-    }
-  </button>
-</form>
+    <form class="package-form" (ngSubmit)="onSubmit()">
+      <fieldset>
+        <legend>Repository</legend>
+        <p class="section-help">The information developers need to fetch this package.</p>
+        <div class="form-grid">
+          <div class="field field-wide">
+            <label for="import-path">{{ 'package.name' | transloco }} <span>Required</span></label>
+            <input id="import-path" type="text" autocomplete="off" placeholder="example.com/team/package" [formField]="form.import_path"/>
+          </div>
+          <div class="field">
+            <label for="vcs">{{ 'package.vcs' | transloco }} <span>Required</span></label>
+            <select id="vcs" [formField]="form.vcs">
+              <option [value]="Vcs.Git">Git</option><option [value]="Vcs.Mercurial">Mercurial</option><option [value]="Vcs.Subversion">Subversion</option><option [value]="Vcs.Fossil">Fossil</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="repository-url">{{ 'package.repository_url' | transloco }} <span>Required</span></label>
+            <input id="repository-url" type="url" placeholder="https://github.com/org/repository" [formField]="form.repository_url"/>
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Source links <small>Optional</small></legend>
+        <p class="section-help">Add direct links when the repository structure needs extra guidance.</p>
+        <div class="form-grid">
+          <div class="field"><label for="source-url">{{ 'package.source_url' | transloco }}</label><input id="source-url" type="url" placeholder="https://…" [formField]="form.source_url"/></div>
+          <div class="field"><label for="source-dir-url">{{ 'package.source_dir_url' | transloco }}</label><input id="source-dir-url" type="url" placeholder="https://…" [formField]="form.source_dir_url"/></div>
+          <div class="field field-wide"><label for="source-file-url">{{ 'package.source_file_url' | transloco }}</label><input id="source-file-url" type="url" placeholder="https://…" [formField]="form.source_file_url"/></div>
+        </div>
+      </fieldset>
+      <div class="form-actions"><button type="submit" [disabled]="!form().valid()">@if (isNew()) { {{'package.submit.create' | transloco}} } @else { {{'package.submit.update' | transloco}} }</button></div>
+    </form>
+  </section>
+}

@@ -1,5 +1,17 @@
-<form (ngSubmit)="onSubmit()">
-  {{'login.api_key' | transloco}}
-  <input type="password" [formField]="form.apiKey" />
-  <button [disabled]="!form().valid()" type="submit">{{'login.submit' | transloco}}</button>
-</form>
+<section class="login-layout">
+  <div class="login-intro">
+    <p class="eyebrow">Go package registry</p>
+    <h1>Administration</h1>
+    <p class="intro-copy">Sign in with an API key to manage packages.</p>
+  </div>
+
+  <form class="login-card" (ngSubmit)="onSubmit()">
+    <div class="card-heading">
+      <h2>{{'login.title' | transloco}}</h2>
+      <p>Enter your API key to continue.</p>
+    </div>
+    <label for="api-key">{{'login.api_key' | transloco}}</label>
+    <input id="api-key" type="password" autocomplete="current-password" placeholder="Paste your API key" [formField]="form.apiKey" />
+    <button [disabled]="!form().valid()" type="submit">{{'login.submit' | transloco}} <span aria-hidden="true">→</span></button>
+  </form>
+</section>

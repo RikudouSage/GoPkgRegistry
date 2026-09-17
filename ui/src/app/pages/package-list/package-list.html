@@ -1,12 +1,31 @@
-@if (packages() === null) {
-  {{'common.loading' | transloco}}
-} @else if (packages()!.length === 0) {
-  {{'packages.empty_list' | transloco}}
-} @else {
-  <a routerLink="/package/create">{{'packages.create_link' | transloco}}</a>
-  <ul>
-    @for (pkg of packages(); track pkg.id) {
-      <li><a routerLink="/package/{{pkg.id}}">{{pkg.import_path}}</a></li>
-    }
-  </ul>
-}
+<section class="packages-page">
+  <header class="page-heading">
+    <div>
+      <p class="eyebrow">Registry</p>
+      <h1>{{'packages.title' | transloco}}</h1>
+      <p>Browse and maintain the package sources available to your team.</p>
+    </div>
+    <a class="create-button" routerLink="/package/create"><span aria-hidden="true">+</span>{{'packages.create_link' | transloco}}</a>
+  </header>
+
+  @if (packages() === null) {
+    <div class="state-card loading-state"><span class="spinner" aria-hidden="true"></span>{{'common.loading' | transloco}}</div>
+  } @else if (packages()!.length === 0) {
+    <div class="state-card empty-state">
+      <span class="empty-icon" aria-hidden="true">⌘</span>
+      <h2>Your registry is empty</h2>
+      <p>{{'packages.empty_list' | transloco}}</p>
+    </div>
+  } @else {
+    <div class="package-list" role="list">
+      @for (pkg of packages(); track pkg.id) {
+        <a class="package-row" routerLink="/package/{{pkg.id}}" role="listitem">
+          <span class="package-icon">go</span>
+          <span class="package-info"><strong>{{pkg.import_path}}</strong><small>{{pkg.repository_url}}</small></span>
+          <span class="vcs-tag">{{pkg.vcs}}</span>
+          <span class="row-arrow" aria-hidden="true">→</span>
+        </a>
+      }
+    </div>
+  }
+</section>

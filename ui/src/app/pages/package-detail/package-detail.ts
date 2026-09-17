@@ -24,7 +24,7 @@ import {ToastrService} from 'ngx-toastr';
 export class PackageDetail implements OnInit {
   protected readonly Vcs = Vcs;
 
-  private readonly formData = signal<Package<''>>(emptyPackage(''));
+  protected readonly formData = signal<Package<''>>(emptyPackage(''));
   protected readonly loading = signal(true);
   protected readonly form = form(this.formData, schemaPath => {
     required(schemaPath.import_path);

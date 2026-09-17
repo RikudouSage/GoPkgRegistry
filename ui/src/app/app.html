@@ -1,1 +1,17 @@
-<router-outlet />
+<div class="app-shell">
+  <header class="topbar">
+    <a class="brand" routerLink="/" aria-label="Go package repository home">
+      <span class="brand-mark">go</span>
+      <span>Package Registry</span>
+    </a>
+
+    <button class="theme-toggle" type="button" (click)="toggleTheme()" [attr.aria-label]="theme() === 'dark' ? 'Use light theme' : 'Use dark theme'">
+      <span aria-hidden="true">{{ theme() === 'dark' ? '☀' : '☾' }}</span>
+      <span class="theme-label">{{ theme() === 'dark' ? 'Light' : 'Dark' }}</span>
+    </button>
+  </header>
+
+  <main class="page-content">
+    <router-outlet />
+  </main>
+</div>
