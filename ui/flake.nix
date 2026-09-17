@@ -42,7 +42,7 @@
               }
 
               const normalizedBaseHref = baseHref.endsWith("/") ? baseHref : baseHref + "/";
-              const baseTag = '<base href="' + normalizedBaseHref + '">';
+              const baseTag = "<base href=\"" + normalizedBaseHref + "\">";
               for (const file of [
                 "/app/browser/index.csr.html",
                 "/app/server/index.server.html",
