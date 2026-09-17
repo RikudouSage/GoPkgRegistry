@@ -59,5 +59,21 @@
           inherit app docker;
           default = docker;
         });
+
+      devShells = forAllSystems (system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          default = pkgs.mkShell {
+            packages = [
+              pkgs.go_1_27
+              pkgs.gopls
+              pkgs.gcc
+              pkgs.pkg-config
+              pkgs.sqlite
+            ];
+          };
+        });
     };
 }
