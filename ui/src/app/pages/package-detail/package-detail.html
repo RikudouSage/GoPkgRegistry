@@ -1,0 +1,39 @@
+<form (ngSubmit)="onSubmit()">
+  <div>
+    <label>{{ 'package.name' | transloco }}</label>
+    <input type="text" [formField]="form.import_path"/>
+  </div>
+  <div>
+    <label>{{ 'package.vcs' | transloco }}</label>
+    <select [formField]="form.vcs">
+      <option [value]="Vcs.Git">Git</option>
+      <option [value]="Vcs.Mercurial">Mercurial</option>
+      <option [value]="Vcs.Subversion">Subversion</option>
+      <option [value]="Vcs.Fossil">Fossil</option>
+    </select>
+  </div>
+  <div>
+    <label>{{ 'package.repository_url' | transloco }}</label>
+    <input type="url" [formField]="form.repository_url"/>
+  </div>
+  <div>
+    <label>{{ 'package.source_url' | transloco }}</label>
+    <input type="url" [formField]="form.source_url"/>
+  </div>
+  <div>
+    <label>{{ 'package.source_dir_url' | transloco }}</label>
+    <input type="url" [formField]="form.source_dir_url"/>
+  </div>
+  <div>
+    <label>{{ 'package.source_file_url' | transloco }}</label>
+    <input type="url" [formField]="form.source_file_url"/>
+  </div>
+
+  <button type="submit" [disabled]="!form().valid()">
+    @if (isNew()) {
+      {{'package.submit.create' | transloco}}
+    } @else {
+      {{'package.submit.update' | transloco}}
+    }
+  </button>
+</form>

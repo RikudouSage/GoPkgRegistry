@@ -18,6 +18,9 @@
             packages = [
               pkgs.nodejs_26
               (pkgs.yarn.override { nodejs = pkgs.nodejs_26; })
+              (pkgs.writeShellScriptBin "ng" ''
+                exec "$PWD/node_modules/.bin/ng" "$@"
+              '')
             ];
           };
         });

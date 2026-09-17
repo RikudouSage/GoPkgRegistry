@@ -11,6 +11,7 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/go-chi/cors"
 	"go.chrastecky.dev/go-pkg-repository/cfg"
 	"go.chrastecky.dev/go-pkg-repository/db"
 	"go.chrastecky.dev/go-pkg-repository/handlers"
@@ -31,10 +32,20 @@ func getRouter() chi.Router {
 	router.Use(middleware.RequestID)
 	router.Use(middleware.Logger)
 	router.Use(middleware.GetHead)
+	if globalConfig.FrontendURL != "" {
+		router.Use(cors.Handler(cors.Options{
+			AllowedOrigins: []string{globalConfig.FrontendURL},
+			AllowedHeaders: []string{"Authorization", "Content-Type"},
+			AllowedMethods: []string{http.MethodGet, http.MethodPost, http.MethodDelete, http.MethodOptions},
+		}))
+	}
 
 	router.With(authMiddleware).Route("/admin", func(router chi.Router) {
 		router.Get("/packages", func(writer http.ResponseWriter, request *http.Request) {
 			handlers.GetPackagesHandler(writer, request, database)
+		})
+		router.Get("/packages/by-id/{id}", func(writer http.ResponseWriter, request *http.Request) {
+			handlers.GetPackageByIDHandler(writer, request, database)
 		})
 		router.Get("/packages/*", func(writer http.ResponseWriter, request *http.Request) {
 			handlers.GetPackageHandler(writer, request, database)

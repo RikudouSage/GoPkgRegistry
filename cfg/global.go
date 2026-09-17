@@ -11,6 +11,7 @@ type GlobalConfig struct {
 	HostOverride string `split_words:"true"`
 	// DatabasePath is the path to the SQLite database file.
 	DatabasePath string `default:"./data.sqlite3" split_words:"true"`
+	FrontendURL  string `split_words:"true"`
 }
 
 // GetGlobalConfig loads GlobalConfig from APP_-prefixed environment variables.

@@ -68,6 +68,24 @@ func (receiver *Client) FindPackageByImportPath(path string) (*dto.Package, erro
 	}
 }
 
+func (receiver *Client) FindPackageByID(id int) (*dto.Package, error) {
+	rows, err := receiver.db.Query("SELECT id, import_path, vcs, repository_url, source_url, source_dir_url, source_file_url from packages where id=? limit 1", id)
+	if err != nil {
+		return nil, fmt.Errorf("failed to query database: %w", err)
+	}
+	defer rows.Close()
+
+	if !rows.Next() {
+		return nil, nil
+	}
+
+	if pkg, err := receiver.scanPackage(rows); err != nil {
+		return nil, fmt.Errorf("failed to scan package: %w", err)
+	} else {
+		return pkg, nil
+	}
+}
+
 // GetPackages returns all stored packages.
 func (receiver *Client) GetPackages() ([]*dto.Package, error) {
 	rows, err := receiver.db.Query("SELECT id, import_path, vcs, repository_url, source_url, source_dir_url, source_file_url from packages")

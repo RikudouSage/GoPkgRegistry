@@ -1,0 +1,5 @@
+<form (ngSubmit)="onSubmit()">
+  {{'login.api_key' | transloco}}
+  <input type="password" [formField]="form.apiKey" />
+  <button [disabled]="!form().valid()" type="submit">{{'login.submit' | transloco}}</button>
+</form>

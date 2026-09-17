@@ -53,5 +53,9 @@ func (receiver *URI) AsGoURL() *url.URL {
 
 // String returns the URI string with percent-escaped path characters decoded.
 func (receiver *URI) String() string {
+	if receiver == nil {
+		return ""
+	}
+
 	return lo.Must(url.PathUnescape(receiver.AsGoURL().String()))
 }

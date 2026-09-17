@@ -1,0 +1,30 @@
+{
+  "common.notification.error": "Error",
+  "common.notification.success": "Success",
+  "common.loading": "Loading...",
+
+  "login.title": "Log in",
+  "login.api_key": "API key",
+  "login.submit": "Log in",
+  "login.error.empty_api_key": "The {{login.api_key}} cannot be empty",
+  "login.error.invalid_api_key": "The {{login.api_key}} is not valid",
+
+  "packages.title": "Package list",
+  "packages.empty_list": "There are no packages, why don't you create one?",
+  "packages.create_link": "Create a new package",
+  "package.error.invalid_form": "You must fill out all required fields",
+  "package.error.failed_update": "Creating/updating the package failed",
+
+  "package.title.create": "Add a new package",
+  "package.title.edit": "Update package {{pkgName}}",
+  "package.name": "Name",
+  "package.vcs": "VCS",
+  "package.repository_url": "Repository URL",
+  "package.source_url": "Source URL",
+  "package.source_dir_url": "Source dir URL",
+  "package.source_file_url": "Source file URL",
+  "package.submit.create": "Create",
+  "package.submit.update": "Update",
+  "package.success.updated": "Package metadata successfully updated",
+  "package.success.created": "Package metadata successfully created"
+}

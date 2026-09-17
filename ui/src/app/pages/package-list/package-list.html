@@ -1,0 +1,12 @@
+@if (packages() === null) {
+  {{'common.loading' | transloco}}
+} @else if (packages()!.length === 0) {
+  {{'packages.empty_list' | transloco}}
+} @else {
+  <a routerLink="/package/create">{{'packages.create_link' | transloco}}</a>
+  <ul>
+    @for (pkg of packages(); track pkg.id) {
+      <li><a routerLink="/package/{{pkg.id}}">{{pkg.import_path}}</a></li>
+    }
+  </ul>
+}
