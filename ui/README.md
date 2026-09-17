@@ -20,6 +20,7 @@ For a reverse proxy that routes `/api` to the repository server, run:
 
 ```console
 docker run --rm --publish 4000:4000 \
+  --init
   --env API_URL=/api \
   --env SSR_API_URL=http://repository:8080 \
   --env BASE_HREF=/ui/ \
