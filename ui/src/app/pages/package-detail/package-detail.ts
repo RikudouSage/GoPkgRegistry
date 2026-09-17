@@ -1,4 +1,5 @@
-import {Component, computed, DestroyRef, effect, OnInit, signal} from '@angular/core';
+import {isPlatformBrowser} from '@angular/common';
+import {Component, computed, DestroyRef, effect, inject, OnInit, PLATFORM_ID, signal} from '@angular/core';
 import {emptyPackage, Package, Vcs} from '../../dto/package';
 import {form, FormField, required} from '@angular/forms/signals';
 import {Api} from '../../services/api';
@@ -10,6 +11,8 @@ import {FormsModule} from '@angular/forms';
 import {TranslocoPipe} from '@jsverse/transloco';
 import {firstValueFrom} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
+
+const MAIN_BRANCH_STORAGE_KEY = 'package-main-branch';
 
 @Component({
   imports: [
@@ -32,6 +35,11 @@ export class PackageDetail implements OnInit {
     required(schemaPath.repository_url);
   });
   protected readonly isNew = computed(() => this.formData().id === 0);
+  protected readonly isGithub = computed(() => this.formData().repository_url.startsWith('https://github.com/'));
+  private readonly platformId = inject(PLATFORM_ID);
+  protected readonly mainBranch = signal(
+    isPlatformBrowser(this.platformId) ? localStorage.getItem(MAIN_BRANCH_STORAGE_KEY) ?? 'master' : 'master',
+  );
 
   public constructor(
     private readonly api: Api,
@@ -42,6 +50,27 @@ export class PackageDetail implements OnInit {
     private readonly toastr: ToastrService,
     private readonly router: Router,
   ) {
+    if (isPlatformBrowser(this.platformId)) {
+      effect(() => localStorage.setItem(MAIN_BRANCH_STORAGE_KEY, this.mainBranch()));
+    }
+
+    effect(() => {
+      if (!this.isGithub()) {
+        return;
+      }
+
+      const repositoryUrl = this.formData().repository_url.replace(/\/+$/, '');
+      const mainBranch = this.mainBranch();
+      if (!this.form.source_url().touched()) {
+        this.form.source_url().value.set(repositoryUrl);
+      }
+      if (!this.form.source_dir_url().touched()) {
+        this.form.source_dir_url().value.set(`${repositoryUrl}/tree/${mainBranch}{/dir}`);
+      }
+      if (!this.form.source_file_url().touched()) {
+        this.form.source_file_url().value.set(`${repositoryUrl}/blob/${mainBranch}{/dir}/{file}#L{line}`);
+      }
+    });
   }
 
   public ngOnInit(): void {

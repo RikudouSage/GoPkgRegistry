@@ -53,6 +53,7 @@
   "package.name": "Name",
   "package.vcs": "VCS",
   "package.repository_url": "Repository URL",
+  "package.main_branch": "Main branch",
   "package.source_url": "Source URL",
   "package.source_dir_url": "Source dir URL",
   "package.source_file_url": "Source file URL",

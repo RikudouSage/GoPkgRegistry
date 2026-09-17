@@ -27,6 +27,12 @@
             <label for="repository-url">{{ 'package.repository_url' | transloco }} <span>{{ 'common.required' | transloco }}</span></label>
             <input id="repository-url" type="url" [placeholder]="'package.placeholder.repository_url' | transloco" [formField]="form.repository_url"/>
           </div>
+          @if (isGithub()) {
+            <div class="field">
+              <label for="main-branch">{{ 'package.main_branch' | transloco }}</label>
+              <input id="main-branch" type="text" autocomplete="off" [value]="mainBranch()" (input)="mainBranch.set(self.value)" #self/>
+            </div>
+          }
         </div>
       </fieldset>
 
