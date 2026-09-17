@@ -35,6 +35,8 @@
             tag = dockerTag;
 
             contents = [
+              pkgs.dockerTools.binSh
+              pkgs.coreutils
               pkgs.cacert
               pkgs.tzdata
             ];

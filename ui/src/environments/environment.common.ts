@@ -23,10 +23,12 @@ export function getEnvOrDefault(name: string, defaultValue: string): string {
 
 export interface Environment {
   apiUrl: string;
+  ssrApiUrl: string;
   sameOrigin: boolean;
 }
 
 export const commonEnvironment = {
   apiUrl: getEnvOrDefault('API_URL', '/api'),
+  ssrApiUrl: getEnvOrDefault('SSR_API_URL', ''),
   sameOrigin: getEnvOrDefault('SAME_ORIGIN', 'true') === 'true',
 };

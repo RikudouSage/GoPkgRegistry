@@ -10,6 +10,8 @@ go get go.example.com/project
 
 The service returns metadata directing Go to the package's actual Git, Mercurial, Subversion, or Fossil repository.
 
+The browser administration UI is documented in [ui/README.md](ui/README.md).
+
 ## Configuration
 
 Configuration is read from environment variables. `APP_ADMIN_API_KEY` is the only required variable.

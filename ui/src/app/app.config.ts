@@ -7,14 +7,14 @@ import { ApiKeyInterceptor } from './http/api-key-interceptor';
 import { TranslocoHttpLoader } from './transloco-loader';
 import { provideTransloco } from '@jsverse/transloco';
 import {provideToastr} from 'ngx-toastr';
+import {SsrApiInterceptor} from './http/ssr-api-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
     provideClientHydration(),
-    provideHttpClient(withInterceptors([ApiKeyInterceptor])),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([ApiKeyInterceptor, SsrApiInterceptor])),
     provideTransloco({
       config: {
         availableLangs: ['en', 'cs'],
