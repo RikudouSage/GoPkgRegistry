@@ -22,6 +22,7 @@ Configuration is read from environment variables. `APP_ADMIN_API_KEY` is the onl
 | `APP_PORT`          | No       | `8080`           | HTTP listen port.                                                                                                                                                   |
 | `APP_HOST_OVERRIDE` | No       | Request host     | Public host used when resolving an import path, such as `go.example.com`. This is useful behind a reverse proxy if it does not preserve the original `Host` header. |
 | `APP_DATABASE_PATH` | No       | `./data.sqlite3` | Path to the SQLite database. The database and schema are created automatically.                                                                                     |
+| `APP_FRONTEND_URL`  | No       | —                | Allowed UI origin for CORS, for example `https://ui.example.com`. Set this when the UI and API use different origins.                                               |
 
 ## Run with Docker
 
