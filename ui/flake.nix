@@ -34,11 +34,28 @@
 
             ${pkgs.nodejs_26}/bin/node -e '
               const fs = require("node:fs");
-              const file = process.argv[1];
+              const runtimeVariablesFile = process.argv[1];
+              const baseHref = process.env.BASE_HREF || "/";
+
+              if (!baseHref.startsWith("/")) {
+                throw new Error("BASE_HREF must start with a slash.");
+              }
+
+              const normalizedBaseHref = baseHref.endsWith("/") ? baseHref : baseHref + "/";
+              const baseTag = '<base href="' + normalizedBaseHref + '">';
+              for (const file of [
+                "/app/browser/index.csr.html",
+                "/app/server/index.server.html",
+                "/app/server/assets-chunks/index_csr_html.mjs",
+                "/app/server/assets-chunks/index_server_html.mjs",
+              ]) {
+                const html = fs.readFileSync(file, "utf8");
+                fs.writeFileSync(file, html.replace(/<base href="[^"]*">/, baseTag));
+              }
 
               for (const name of ["API_URL", "SAME_ORIGIN", "SSR_API_URL"]) {
                 if (Object.hasOwn(process.env, name)) {
-                  fs.appendFileSync(file, `\ndefine(''${JSON.stringify(name)}, ''${JSON.stringify(process.env[name])});\n`);
+                  fs.appendFileSync(runtimeVariablesFile, `\ndefine(''${JSON.stringify(name)}, ''${JSON.stringify(process.env[name])});\n`);
                 }
               }
             ' "$runtime_variables_file"
@@ -86,7 +103,7 @@
             extraCommands = ''
               mkdir -p app
               cp -r ${app}/. app/
-              chmod 0777 app/browser
+              chmod -R a+w app/browser app/server
 
               mkdir -p etc
               echo 'appuser:x:10001:10001:Application user:/nonexistent:/sbin/nologin' > etc/passwd
