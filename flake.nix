@@ -27,7 +27,7 @@
 
             env.CGO_ENABLED = "1";
             ldflags = [ "-s" "-w" ];
-            vendorHash = "sha256-6IsWj4ANSbqSSpYPTeAqqYfcoEb8DURJh69l6NRWD8k=";
+            vendorHash = "sha256-QsdordNe+r0RCjzvQN09RtZ3U0rTC8OPYvMtPa1xLrw=";
           };
 
           docker = pkgs.dockerTools.buildLayeredImage {
