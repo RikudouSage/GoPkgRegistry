@@ -6,6 +6,12 @@
       <p class="eyebrow">{{ (isNew() ? 'package.editor.new_entry' : 'package.editor.settings') | transloco }}</p>
       <h1>{{ isNew() ? ('package.editor.create_heading' | transloco) : formData().import_path }}</h1>
       <p>{{ (isNew() ? 'package.editor.create_description' : 'package.editor.edit_description') | transloco }}</p>
+      @if (!isNew()) {
+        <div class="external-actions">
+          <a [href]="'https://pkg.go.dev/' + formData().import_path" target="_blank" rel="noopener noreferrer">{{ 'package.action.pkg_go_dev' | transloco }} <span aria-hidden="true">↗</span></a>
+          <a [href]="formData().repository_url" target="_blank" rel="noopener noreferrer">{{ 'package.action.source' | transloco }} <span aria-hidden="true">↗</span></a>
+        </div>
+      }
     </header>
 
     <form class="package-form" (ngSubmit)="onSubmit()">

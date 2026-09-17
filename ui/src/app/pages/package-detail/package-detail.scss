@@ -30,6 +30,37 @@
   text-transform: uppercase;
 }
 
+.external-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 1.25rem;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 0.6rem;
+    color: var(--text);
+    font-size: 0.85rem;
+    font-weight: 750;
+    text-decoration: none;
+    transition:
+      border-color 0.2s ease,
+      background 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: translateY(-1px);
+    }
+  }
+}
+
 .package-form {
   overflow: hidden;
   border: 1px solid var(--border);

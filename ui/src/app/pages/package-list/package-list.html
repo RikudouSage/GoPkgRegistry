@@ -19,12 +19,16 @@
   } @else {
     <div class="package-list" role="list">
       @for (pkg of packages(); track pkg.id) {
-        <a class="package-row" routerLink="/package/{{pkg.id}}" role="listitem">
+        <div class="package-row" role="listitem">
           <span class="package-icon">go</span>
-          <span class="package-info"><strong>{{pkg.import_path}}</strong><small>{{pkg.repository_url}}</small></span>
+          <a class="package-info" routerLink="/package/{{pkg.id}}"><strong>{{pkg.import_path}}</strong><small>{{pkg.repository_url}}</small></a>
           <span class="vcs-tag">{{pkg.vcs}}</span>
-          <span class="row-arrow" aria-hidden="true">→</span>
-        </a>
+          <div class="external-actions">
+            <a class="external-action pkg-go-dev" [href]="'https://pkg.go.dev/' + pkg.import_path" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'packages.action.pkg_go_dev' | transloco" [title]="'packages.action.pkg_go_dev' | transloco">pkg.go.dev <span aria-hidden="true">↗</span></a>
+            <a class="external-action source" [href]="pkg.repository_url" target="_blank" rel="noopener noreferrer" [attr.aria-label]="'packages.action.source' | transloco" [title]="'packages.action.source' | transloco"><span aria-hidden="true">&lt;/&gt;</span><span class="external-action-label">{{ 'packages.action.source_short' | transloco }}</span></a>
+          </div>
+          <a class="row-arrow" routerLink="/package/{{pkg.id}}" [attr.aria-label]="'packages.action.edit' | transloco">→</a>
+        </div>
       }
     </div>
   }
